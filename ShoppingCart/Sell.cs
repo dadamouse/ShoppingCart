@@ -7,14 +7,36 @@ namespace ShoppingCart
 {
     public class Sell
     {
-        public void addProduct(Books book1, int buyNum)
+        private Order order { get; set; }
+
+        public Sell()
         {
-            throw new NotImplementedException();
+            order = new Order();
         }
 
-        public object totalPrice()
+        public void addProduct(Books book, int buyNum)
         {
-            throw new NotImplementedException();
+            try
+            {
+                order.add(book, buyNum);
+            }
+            catch (NullReferenceException e)
+            {
+                //null exception
+                throw new Exception(e.ToString());
+            }
+        }
+
+        public int totalPrice()
+        {
+            int total = 0;
+            foreach (var detail in order.CollectProducts)
+            {
+                total += detail.Key.SellPrice * detail.Value;
+                Console.WriteLine("Key = {0}, Value = {1}", detail.Key.SellPrice, detail.Value);
+            }
+
+            return total;
         }
     }
 
@@ -22,5 +44,27 @@ namespace ShoppingCart
     {
         public int Id { get; set; }
         public int SellPrice { get; set; }
+    }
+
+    public class Order
+    {
+        public Dictionary<Books, int> CollectProducts { get; private set; }
+
+        public Order()
+        {
+            CollectProducts = new Dictionary<Books, int>();
+        }
+
+        public void add(Books book, int buyNum)
+        {
+            if (CollectProducts.ContainsKey(book))
+            {
+                CollectProducts[book] += buyNum;
+            }
+            else
+            {
+                CollectProducts.Add(book, buyNum);
+            }
+        }
     }
 }
