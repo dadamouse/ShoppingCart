@@ -27,14 +27,25 @@ namespace ShoppingCart
             }
         }
 
-        public int totalPrice()
+        public double totalPrice()
         {
-            int total = 0;
+            double total = 0;
+
+            var count = 0;
             foreach (var detail in order.CollectProducts)
             {
                 total += detail.Key.SellPrice * detail.Value;
                 Console.WriteLine("Key = {0}, Value = {1}", detail.Key.SellPrice, detail.Value);
+
+                count++;
             }
+
+            double discount = 1;
+            if (count == 2)
+            {
+                discount = 0.95;
+            }
+            total = total * discount;
 
             return total;
         }
