@@ -86,7 +86,7 @@ namespace ShoppingCart.Tests
         }
 
 
-        //Scenario: 一二三四集各買了一本，價格應為100*4*0.8=320
+        //Scenario: 一二三四集各買了一本，價格應為100*4*0.8=32s0
         [TestMethod()]
         public void test_Scenario_一二三四集各買了一本_價格應為100_320()
         {

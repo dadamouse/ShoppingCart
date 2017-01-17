@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DiscountLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,18 +41,33 @@ namespace ShoppingCart
                 count++;
             }
 
-            double discount = 1;
-            if (count == 2)
-            {
-                discount = 0.95;
-            }
-            else if (count == 3)
-            {
-                discount = 0.9;
-            }
-            total = total * discount;
+            IDiscount iDiscount = getDiscount(count);
+            total = total * iDiscount.getDiscount();
 
             return total;
+        }
+
+        private IDiscount getDiscount(int buyNum)
+        {
+            IDiscount result = null;
+            if (buyNum == 1)
+            {
+                result = new BuyOneBook();
+            }
+            else if (buyNum == 2)
+            {
+                result = new BuyTwoBook();
+            }
+            else if (buyNum == 3)
+            {
+                result = new BuyThreeBook();
+            }
+            else if (buyNum == 4)
+            {
+                result = new BuyfourBook();
+            }
+
+            return result;
         }
     }
 
