@@ -143,7 +143,7 @@ namespace ShoppingCart.Tests
             var book1 = new Books { name = "P1", SellPrice = 100 };
             var book2 = new Books { name = "P2", SellPrice = 100 };
             var book3 = new Books { name = "P3", SellPrice = 100 };
-            var expected = 375;
+            var expected = 370;
 
             //act
             sell.addProduct(book1, 1);

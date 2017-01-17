@@ -31,18 +31,39 @@ namespace ShoppingCart
         public double totalPrice()
         {
             double total = 0;
-
-            var count = 0;
-            foreach (var detail in order.CollectProducts)
+            var totolCollect = new Dictionary<int, Pack>();
+            foreach (var detail in order.collectProducts)
             {
-                total += detail.Key.SellPrice * detail.Value;
-                Console.WriteLine("Key = {0}, Value = {1}", detail.Key.SellPrice, detail.Value);
-
-                count++;
+                //counting pack
+                for (var i=0;i< detail.Value;i++)
+                {
+                    Pack pack = null;
+                    if (totolCollect.ContainsKey(i))
+                    {
+                        
+                        totolCollect.TryGetValue(i, out pack);
+                        Console.WriteLine("Key = {0}, Value = {1}", pack.price, pack.count);
+                        pack.price += detail.Key.SellPrice;
+                        pack.count++;
+                        totolCollect[i] = pack;
+                    }
+                    else
+                    {
+                        pack = new Pack() { price = detail.Key.SellPrice, count = 1 };
+                        totolCollect.Add(i, pack);
+                        Console.WriteLine("Key1 = {0}, Value = {1}", pack.price, pack.count);
+                    }
+                }
             }
-
-            IDiscount iDiscount = getDiscount(count);
-            total = total * iDiscount.getDiscount();
+            
+            // counting discount
+            for (var i = 0; i < totolCollect.Count; i++)
+            {
+                Console.WriteLine("KeyA = {0}, ValueA = {1}", totolCollect[i].price, totolCollect[i].count);
+                IDiscount idiscount = getDiscount(totolCollect[i].count);
+                total += totolCollect[i].price * idiscount.getDiscount();
+                Console.WriteLine("total = {0}", total);
+            }
 
             return total;
         }
@@ -75,6 +96,11 @@ namespace ShoppingCart
         }
     }
 
+    public class Pack
+    {
+        public int price { get; set; }
+        public int count { get; set; }
+    }
     public class Books
     {
         public string name { get; set; }
@@ -83,23 +109,38 @@ namespace ShoppingCart
 
     public class Order
     {
-        public Dictionary<Books, int> CollectProducts { get; private set; }
+        public Dictionary<Books, int> collectProducts { get; private set; }
+        public Dictionary<int, int> pack { get; set; }
 
         public Order()
         {
-            CollectProducts = new Dictionary<Books, int>();
+            collectProducts = new Dictionary<Books, int>();
+            pack = new Dictionary<int, int>();
         }
 
         public void add(Books book, int buyNum)
         {
-            if (CollectProducts.ContainsKey(book))
+            if (collectProducts.ContainsKey(book))
             {
-                CollectProducts[book] += buyNum;
+                collectProducts[book] += buyNum;
             }
             else
             {
-                CollectProducts.Add(book, buyNum);
+                collectProducts.Add(book, buyNum);
             }
+
+            for (var i=0;i<buyNum;i++)
+            {
+                if (pack.ContainsKey(i))
+                {
+                    pack[i] += buyNum;
+                }
+                else
+                {
+                    pack.Add(i, buyNum);
+                }
+            }
+
         }
     }
 }
