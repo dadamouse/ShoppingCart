@@ -42,7 +42,7 @@ namespace ShoppingCart
 
     public class Books
     {
-        public int Id { get; set; }
+        public string name { get; set; }
         public int SellPrice { get; set; }
     }
 

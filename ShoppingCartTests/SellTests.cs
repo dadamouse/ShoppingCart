@@ -34,11 +34,30 @@ namespace ShoppingCart.Tests
         {
             //arrange 
             var sell = new Sell();
-            var book1 = new Books { Id = 1 , SellPrice = 100};
+            var book1 = new Books { name = "P1" , SellPrice = 100};
             var expected = 100;
 
             //act
             sell.addProduct(book1, 1);
+            var actual = sell.totalPrice();
+
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        //Scenario: 第一集買了一本，第二集也買了一本，價格應為100*2*0.95=190
+        [TestMethod()]
+        public void test_第一集買了一本_第二集也買了一本_價格應為190()
+        {
+            //arrange 
+            var sell = new Sell();
+            var book1 = new Books { name = "P1", SellPrice = 100 };
+            var book2 = new Books { name = "P2", SellPrice = 100 };
+            var expected = 190;
+
+            //act
+            sell.addProduct(book1, 1);
+            sell.addProduct(book2, 1);
             var actual = sell.totalPrice();
 
             //assert
