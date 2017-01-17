@@ -50,21 +50,25 @@ namespace ShoppingCart
         private IDiscount getDiscount(int buyNum)
         {
             IDiscount result = null;
-            if (buyNum == 1)
+
+            switch (buyNum)
             {
-                result = new BuyOneBook();
-            }
-            else if (buyNum == 2)
-            {
-                result = new BuyTwoBook();
-            }
-            else if (buyNum == 3)
-            {
-                result = new BuyThreeBook();
-            }
-            else if (buyNum == 4)
-            {
-                result = new BuyfourBook();
+                default:
+                case 1:
+                    result = new BuyOneBook();
+                    break;
+                case 2:
+                    result = new BuyTwoBook();
+                    break;
+                case 3:
+                    result = new BuyThreeBook();
+                    break;
+                case 4:
+                    result = new BuyfourBook();
+                    break;
+                case 5:
+                    result = new BuyFiveBook();
+                    break;
             }
 
             return result;
