@@ -42,7 +42,6 @@ namespace ShoppingCart
                     {
                         
                         totolCollect.TryGetValue(i, out pack);
-                        Console.WriteLine("Key = {0}, Value = {1}", pack.price, pack.count);
                         pack.price += detail.Key.SellPrice;
                         pack.count++;
                         totolCollect[i] = pack;
@@ -51,7 +50,6 @@ namespace ShoppingCart
                     {
                         pack = new Pack() { price = detail.Key.SellPrice, count = 1 };
                         totolCollect.Add(i, pack);
-                        Console.WriteLine("Key1 = {0}, Value = {1}", pack.price, pack.count);
                     }
                 }
             }
@@ -59,10 +57,8 @@ namespace ShoppingCart
             // counting discount
             for (var i = 0; i < totolCollect.Count; i++)
             {
-                Console.WriteLine("KeyA = {0}, ValueA = {1}", totolCollect[i].price, totolCollect[i].count);
                 IDiscount idiscount = getDiscount(totolCollect[i].count);
                 total += totolCollect[i].price * idiscount.getDiscount();
-                Console.WriteLine("total = {0}", total);
             }
 
             return total;
