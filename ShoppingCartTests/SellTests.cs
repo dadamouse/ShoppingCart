@@ -84,5 +84,29 @@ namespace ShoppingCart.Tests
             //assert
             Assert.AreEqual(expected, actual);
         }
+
+
+        //Scenario: 一二三四集各買了一本，價格應為100*4*0.8=320
+        [TestMethod()]
+        public void test_Scenario_一二三四集各買了一本_價格應為100_320()
+        {
+            //arrange 
+            var sell = new Sell();
+            var book1 = new Books { name = "P1", SellPrice = 100 };
+            var book2 = new Books { name = "P2", SellPrice = 100 };
+            var book3 = new Books { name = "P3", SellPrice = 100 };
+            var book4 = new Books { name = "P4", SellPrice = 100 };
+            var expected = 320;
+
+            //act
+            sell.addProduct(book1, 1);
+            sell.addProduct(book2, 1);
+            sell.addProduct(book3, 1);
+            sell.addProduct(book4, 1);
+            var actual = sell.totalPrice();
+
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
