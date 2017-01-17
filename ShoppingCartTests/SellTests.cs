@@ -133,5 +133,27 @@ namespace ShoppingCart.Tests
             //assert
             Assert.AreEqual(expected, actual);
         }
+
+        //Scenario: 一二集各買了一本，第三集買了兩本，價格應為100*3*0.9 + 100 = 370
+        [TestMethod()]
+        public void test_一二集各買了一本_第三集買了兩本_價格應為370()
+        {
+            //arrange 
+            var sell = new Sell();
+            var book1 = new Books { name = "P1", SellPrice = 100 };
+            var book2 = new Books { name = "P2", SellPrice = 100 };
+            var book3 = new Books { name = "P3", SellPrice = 100 };
+            var expected = 375;
+
+            //act
+            sell.addProduct(book1, 1);
+            sell.addProduct(book2, 1);
+            sell.addProduct(book3, 2);
+
+            var actual = sell.totalPrice();
+
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
