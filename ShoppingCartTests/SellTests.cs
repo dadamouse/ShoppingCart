@@ -34,12 +34,12 @@ namespace ShoppingCart.Tests
         {
             //arrange 
             var sell = new Sell();
-            var book1 = new Books { name = "P1" , SellPrice = 100};
+            var book1 = new Book { name = "P1" , sellPrice = 100};
             var expected = 100;
 
             //act
-            sell.addProduct(book1, 1);
-            var actual = sell.totalPrice();
+            sell.AddProduct(book1, 1);
+            var actual = sell.TotalPrice();
 
             //assert
             Assert.AreEqual(expected, actual);
@@ -51,14 +51,14 @@ namespace ShoppingCart.Tests
         {
             //arrange 
             var sell = new Sell();
-            var book1 = new Books { name = "P1", SellPrice = 100 };
-            var book2 = new Books { name = "P2", SellPrice = 100 };
+            var book1 = new Book { name = "P1", sellPrice = 100 };
+            var book2 = new Book { name = "P2", sellPrice = 100 };
             var expected = 190;
 
             //act
-            sell.addProduct(book1, 1);
-            sell.addProduct(book2, 1);
-            var actual = sell.totalPrice();
+            sell.AddProduct(book1, 1);
+            sell.AddProduct(book2, 1);
+            var actual = sell.TotalPrice();
 
             //assert
             Assert.AreEqual(expected, actual);
@@ -70,16 +70,16 @@ namespace ShoppingCart.Tests
         {
             //arrange 
             var sell = new Sell();
-            var book1 = new Books { name = "P1", SellPrice = 100 };
-            var book2 = new Books { name = "P2", SellPrice = 100 };
-            var book3 = new Books { name = "P3", SellPrice = 100 };
+            var book1 = new Book { name = "P1", sellPrice = 100 };
+            var book2 = new Book { name = "P2", sellPrice = 100 };
+            var book3 = new Book { name = "P3", sellPrice = 100 };
             var expected = 270;
 
             //act
-            sell.addProduct(book1, 1);
-            sell.addProduct(book2, 1);
-            sell.addProduct(book3, 1);
-            var actual = sell.totalPrice();
+            sell.AddProduct(book1, 1);
+            sell.AddProduct(book2, 1);
+            sell.AddProduct(book3, 1);
+            var actual = sell.TotalPrice();
 
             //assert
             Assert.AreEqual(expected, actual);
@@ -92,18 +92,18 @@ namespace ShoppingCart.Tests
         {
             //arrange 
             var sell = new Sell();
-            var book1 = new Books { name = "P1", SellPrice = 100 };
-            var book2 = new Books { name = "P2", SellPrice = 100 };
-            var book3 = new Books { name = "P3", SellPrice = 100 };
-            var book4 = new Books { name = "P4", SellPrice = 100 };
+            var book1 = new Book { name = "P1", sellPrice = 100 };
+            var book2 = new Book { name = "P2", sellPrice = 100 };
+            var book3 = new Book { name = "P3", sellPrice = 100 };
+            var book4 = new Book { name = "P4", sellPrice = 100 };
             var expected = 320;
 
             //act
-            sell.addProduct(book1, 1);
-            sell.addProduct(book2, 1);
-            sell.addProduct(book3, 1);
-            sell.addProduct(book4, 1);
-            var actual = sell.totalPrice();
+            sell.AddProduct(book1, 1);
+            sell.AddProduct(book2, 1);
+            sell.AddProduct(book3, 1);
+            sell.AddProduct(book4, 1);
+            var actual = sell.TotalPrice();
 
             //assert
             Assert.AreEqual(expected, actual);
@@ -115,20 +115,20 @@ namespace ShoppingCart.Tests
         {
             //arrange 
             var sell = new Sell();
-            var book1 = new Books { name = "P1", SellPrice = 100 };
-            var book2 = new Books { name = "P2", SellPrice = 100 };
-            var book3 = new Books { name = "P3", SellPrice = 100 };
-            var book4 = new Books { name = "P4", SellPrice = 100 };
-            var book5 = new Books { name = "P5", SellPrice = 100 };
+            var book1 = new Book { name = "P1", sellPrice = 100 };
+            var book2 = new Book { name = "P2", sellPrice = 100 };
+            var book3 = new Book { name = "P3", sellPrice = 100 };
+            var book4 = new Book { name = "P4", sellPrice = 100 };
+            var book5 = new Book { name = "P5", sellPrice = 100 };
             var expected = 375;
 
             //act
-            sell.addProduct(book1, 1);
-            sell.addProduct(book2, 1);
-            sell.addProduct(book3, 1);
-            sell.addProduct(book4, 1);
-            sell.addProduct(book5, 1);
-            var actual = sell.totalPrice();
+            sell.AddProduct(book1, 1);
+            sell.AddProduct(book2, 1);
+            sell.AddProduct(book3, 1);
+            sell.AddProduct(book4, 1);
+            sell.AddProduct(book5, 1);
+            var actual = sell.TotalPrice();
 
             //assert
             Assert.AreEqual(expected, actual);
@@ -140,17 +140,17 @@ namespace ShoppingCart.Tests
         {
             //arrange 
             var sell = new Sell();
-            var book1 = new Books { name = "P1", SellPrice = 100 };
-            var book2 = new Books { name = "P2", SellPrice = 100 };
-            var book3 = new Books { name = "P3", SellPrice = 100 };
+            var book1 = new Book { name = "P1", sellPrice = 100 };
+            var book2 = new Book { name = "P2", sellPrice = 100 };
+            var book3 = new Book { name = "P3", sellPrice = 100 };
             var expected = 370;
 
             //act
-            sell.addProduct(book1, 1);
-            sell.addProduct(book2, 1);
-            sell.addProduct(book3, 2);
+            sell.AddProduct(book1, 1);
+            sell.AddProduct(book2, 1);
+            sell.AddProduct(book3, 2);
 
-            var actual = sell.totalPrice();
+            var actual = sell.TotalPrice();
 
             //assert
             Assert.AreEqual(expected, actual);
@@ -162,17 +162,17 @@ namespace ShoppingCart.Tests
         {
             //arrange 
             var sell = new Sell();
-            var book1 = new Books { name = "P1", SellPrice = 100 };
-            var book2 = new Books { name = "P2", SellPrice = 100 };
-            var book3 = new Books { name = "P3", SellPrice = 100 };
+            var book1 = new Book { name = "P1", sellPrice = 100 };
+            var book2 = new Book { name = "P2", sellPrice = 100 };
+            var book3 = new Book { name = "P3", sellPrice = 100 };
             var expected = 460;
 
             //act
-            sell.addProduct(book1, 1);
-            sell.addProduct(book2, 2);
-            sell.addProduct(book3, 2);
+            sell.AddProduct(book1, 1);
+            sell.AddProduct(book2, 2);
+            sell.AddProduct(book3, 2);
 
-            var actual = sell.totalPrice();
+            var actual = sell.TotalPrice();
 
             //assert
             Assert.AreEqual(expected, actual);

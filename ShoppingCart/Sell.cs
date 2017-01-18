@@ -8,67 +8,71 @@ namespace ShoppingCart
 {
     public class Sell
     {
-        private Order order { get; set; }
+        public Dictionary<Book, int> collectProducts { get; private set; }
 
         public Sell()
         {
-            order = new Order();
+            collectProducts = new Dictionary<Book, int>();
         }
 
-        public void addProduct(Books book, int buyNum)
+        public void AddProduct(Book book, int buyNumber)
         {
-            try
+            if (book == null)
             {
-                order.add(book, buyNum);
+                throw new ArgumentException("book cannot be null");
             }
-            catch (NullReferenceException e)
+
+            if (collectProducts.ContainsKey(book))
             {
-                //null exception
-                throw new Exception(e.ToString());
+                collectProducts[book] += buyNumber;
+            }
+            else
+            {
+                collectProducts.Add(book, buyNumber);
             }
         }
 
-        public double totalPrice()
+        public double TotalPrice()
         {
             double total = 0;
             var totolCollect = new Dictionary<int, Pack>();
-            foreach (var detail in order.collectProducts)
+            foreach (var detail in collectProducts)
             {
                 //counting pack
-                for (var i=0;i< detail.Value;i++)
+                for (var i = 0; i < detail.Value; i++)
                 {
                     Pack pack = null;
                     if (totolCollect.ContainsKey(i))
                     {
-                        
+
                         totolCollect.TryGetValue(i, out pack);
-                        pack.price += detail.Key.SellPrice;
+                        pack.price += detail.Key.sellPrice;
                         pack.count++;
                         totolCollect[i] = pack;
                     }
                     else
                     {
-                        pack = new Pack() { price = detail.Key.SellPrice, count = 1 };
+                        pack = new Pack() { price = detail.Key.sellPrice, count = 1 };
                         totolCollect.Add(i, pack);
                     }
                 }
             }
-            
+
             // counting discount
             for (var i = 0; i < totolCollect.Count; i++)
             {
-                IDiscount idiscount = getDiscount(totolCollect[i].count);
-                total += totolCollect[i].price * idiscount.getDiscount();
+                IDiscount iDiscount = GetDiscount(totolCollect[i].count);
+                total += totolCollect[i].price * iDiscount.getDiscount();
             }
 
             return total;
         }
 
-        private IDiscount getDiscount(int buyNum)
+        private IDiscount GetDiscount(int buyNumber)
         {
             IDiscount result = null;
 
-            switch (buyNum)
+            switch (buyNumber)
             {
                 default:
                 case 1:
@@ -97,46 +101,9 @@ namespace ShoppingCart
         public int price { get; set; }
         public int count { get; set; }
     }
-    public class Books
+    public class Book
     {
         public string name { get; set; }
-        public int SellPrice { get; set; }
-    }
-
-    public class Order
-    {
-        public Dictionary<Books, int> collectProducts { get; private set; }
-        public Dictionary<int, int> pack { get; set; }
-
-        public Order()
-        {
-            collectProducts = new Dictionary<Books, int>();
-            pack = new Dictionary<int, int>();
-        }
-
-        public void add(Books book, int buyNum)
-        {
-            if (collectProducts.ContainsKey(book))
-            {
-                collectProducts[book] += buyNum;
-            }
-            else
-            {
-                collectProducts.Add(book, buyNum);
-            }
-
-            for (var i=0;i<buyNum;i++)
-            {
-                if (pack.ContainsKey(i))
-                {
-                    pack[i] += buyNum;
-                }
-                else
-                {
-                    pack.Add(i, buyNum);
-                }
-            }
-
-        }
+        public int sellPrice { get; set; }
     }
 }
