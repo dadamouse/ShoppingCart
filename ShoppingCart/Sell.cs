@@ -84,11 +84,6 @@ namespace ShoppingCart
         }
     }
 
-    public class Pack
-    {
-        public int price { get; set; }
-        public int count { get; set; }
-    }
     public class Book
     {
         public string name { get; set; }
