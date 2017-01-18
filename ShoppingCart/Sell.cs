@@ -34,35 +34,23 @@ namespace ShoppingCart
 
         public double TotalPrice()
         {
-            double total = 0;
-            var totolCollect = new Dictionary<int, Pack>();
-            foreach (var detail in collectProducts)
-            {
-                //counting pack
-                for (var i = 0; i < detail.Value; i++)
+            var groupProducts = collectProducts.GroupBy(r => r.Value)
+                .ToDictionary(t => t.Key, t => new
                 {
-                    Pack pack = null;
-                    if (totolCollect.ContainsKey(i))
-                    {
+                    s = t.Count(),
+                    p = t.Sum(p => p.Key.sellPrice),
+                }).OrderByDescending(o => o.Key).ToList();
 
-                        totolCollect.TryGetValue(i, out pack);
-                        pack.price += detail.Key.sellPrice;
-                        pack.count++;
-                        totolCollect[i] = pack;
-                    }
-                    else
-                    {
-                        pack = new Pack() { price = detail.Key.sellPrice, count = 1 };
-                        totolCollect.Add(i, pack);
-                    }
-                }
-            }
-
-            // counting discount
-            for (var i = 0; i < totolCollect.Count; i++)
+            double total = 0;
+            int tmpCount = 0;
+            double tmpPrice = 0;
+            foreach (var detail in groupProducts)
             {
-                IDiscount iDiscount = GetDiscount(totolCollect[i].count);
-                total += totolCollect[i].price * iDiscount.getDiscount();
+                tmpCount = detail.Value.s + tmpCount;
+                tmpPrice = detail.Value.p + tmpPrice;
+
+                IDiscount iDiscount = GetDiscount(tmpCount);
+                total += tmpPrice * iDiscount.getDiscount();
             }
 
             return total;
